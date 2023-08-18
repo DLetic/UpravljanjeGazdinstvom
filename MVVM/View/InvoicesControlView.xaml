@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Gazdinstvo.MVVM.View.InvoicesControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gazdinstvo.MVVM.View"
+             xmlns:viewModel="clr-namespace:Gazdinstvo.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModel:SubMenuViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <RadioButton Content="Otpremnice"
+                             Style="{StaticResource SubMenuButton}"
+                             IsChecked="True" 
+                             Command="{Binding probaCommand}"/>
+            <RadioButton Content="Fakture"
+                             Style="{StaticResource SubMenuButton}"
+                          Command="{Binding NewInvoiceCommand}"/>
+            <RadioButton Content="Proizvodi"
+                             Style="{StaticResource SubMenuButton}"/>
+            <RadioButton Content="Fakture"
+
+                             Style="{StaticResource SubMenuButton}"/>
+        </StackPanel>
+
+        
+            <ContentControl Grid.Row="1"                           
+                            Margin="5"
+                            Content="{Binding CurrentSubView}"/>
+        
+       
+
+    </Grid>
+</UserControl>

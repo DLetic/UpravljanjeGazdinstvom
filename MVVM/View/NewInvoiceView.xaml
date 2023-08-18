@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="Gazdinstvo.MVVM.View.NewInvoiceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:staticData="clr-namespace:Gazdinstvo.MVVM.Model" xmlns:controls="clr-namespace:System.Windows.Controls;assembly=DotNetProjects.Input.Toolkit"
+             mc:Ignorable="d" 
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="5"
+            
+             TextOptions.TextFormattingMode="Ideal" 
+             TextOptions.TextRenderingMode="Auto"        
+             Background="Transparent"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Border CornerRadius="5" Background="#E9EAEB" >
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0,20,0,0" x:Name="SellerData" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+                <!--SelectionChanged="tb_SelectionChanged"-->
+            <Button Click="Button_Click">gasi</Button>
+
+                <StackPanel Grid.Row="1" Grid.RowSpan="3" Background="Aqua">
+                   <controls:AutoCompleteBox x:Name="tb" Height="46" FontSize="20" >
+                    </controls:AutoCompleteBox>
+                </StackPanel>
+             
+                <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Otpremnica broj:" FontWeight="SemiBold"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+                <TextBlock x:Name="InvoiceNumber" Grid.Column="1" Text="0"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+            </Grid>
+        </Grid>
+            <Grid Grid.Row="1" Grid.Column="2"  Margin="0,20,0,0" x:Name="CustomerData" HorizontalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="CustomerName" Text="Lanzaro 2000 d.o.o." HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignTextBlock}"/>
+                <TextBlock x:Name="CustomerAdress" Grid.Row="1" Text="Vojvode Stepe 6-8 Inđija" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignTextBlock}"/>
+                <TextBlock x:Name="CustomerUid" Grid.Row="2" Text="PIB: 108661095" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignTextBlock}"/>
+                <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Datum:" FontWeight="SemiBold" Style="{DynamicResource MaterialDesignTextBlock}"/>
+                    <TextBlock x:Name="InvoiceDate" Grid.Column="1" Text="1.1.2023"  Style="{DynamicResource MaterialDesignTextBlock}"/>
+                </Grid>
+            </Grid>
+
+            <Grid  x:Name="GridProducts" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Grid.RowSpan="2"  Margin="20">
+                <Grid.Resources>
+                    <DataTemplate x:Key="ProbaTemp">
+                        <ComboBox Height="20" ItemsSource="{Binding LitemDescription}" />
+                    </DataTemplate>
+
+                </Grid.Resources>
+                <DataGrid  x:Name="ItemsDataGrid" AddingNewItem="ItemsDataGrid_AddingNewItem"  IsReadOnly="False" Grid.Column="1" Grid.Row="3" Background="White"   ItemsSource="{Binding Item}" AutoGenerateColumns="False">
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="Redni broj" Binding="{Binding itemNumber}"/>
+                    <DataGridTextColumn Width="300" Header="Naziv proizvoda" Binding="{Binding itemDescription}"/>
+                    <DataGridTextColumn Header="Količina" Binding="{Binding itemQuantity}"/>
+                    <DataGridTextColumn Header="Cena" Binding="{Binding itemPrice}"/>
+                    <DataGridTextColumn Header="Ukupno" Binding="{Binding itemTotal}"/>
+                        
+                    </DataGrid.Columns>
+
+            </DataGrid>
+               
+
+            </Grid>
+    </Grid>
+    </Border>
+</UserControl>
