@@ -13,6 +13,7 @@ namespace Gazdinstvo.MVVM.Model
             public string itemDescription { get; set; }
             public int itemQuantity { get; set; }
             public int itemPrice { get; set; }
-            public int itemTotal { get; set; }      
+            public int itemTotal { get; set; }
+            public int customerPIB { get; set; }
     }
 }

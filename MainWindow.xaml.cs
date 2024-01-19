@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Data;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using Gazdinstvo.MVVM.Model;
+
 namespace Gazdinstvo
 {
     /// <summary>
@@ -36,8 +38,8 @@ namespace Gazdinstvo
             
             menuWindow.Show();
             this.Close();
-            /*
-            try
+            
+           /* try
             {
                 
                 
@@ -55,10 +57,12 @@ namespace Gazdinstvo
                 item.itemTotal = item.itemQuantity * item.itemPrice;
                
                 items.Add(item);
-               
+
+                DatabaseContext databaseContext = new DatabaseContext();
+
                 
 
-                invoice.ItemsDataGrid.DataContext = reader;
+                invoice.ItemsDataGrid.DataContext = databaseContext.getItems();
               
 
 
@@ -79,8 +83,8 @@ namespace Gazdinstvo
             catch
             {
                 this.IsEnabled = true;
-            }
-        }*/
+            }*/
+        }
     }
 
         public class Items
@@ -93,5 +97,5 @@ namespace Gazdinstvo
 
             public int itemTotal { get; set; }
         }
-    }
+    
 }

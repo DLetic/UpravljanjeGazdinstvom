@@ -25,4 +25,11 @@
     <Folder Include="Fonts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Theme\TextBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

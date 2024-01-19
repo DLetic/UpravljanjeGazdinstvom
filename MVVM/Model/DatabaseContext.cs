@@ -31,7 +31,69 @@ namespace Gazdinstvo.MVVM.Model
             
         }
 
-        public List<string> getIT()
+
+        public List<Customer> getCustomer()
+        {
+            try
+            {
+                SQLiteConnection i_dbConnection = new SQLiteConnection(@"Data Source = C:\Users\cenejac\Downloads\proba.db;");
+                SQLiteCommand i_dbCommand = new SQLiteCommand("SELECT * from customer", i_dbConnection);
+                SQLiteDataAdapter i_dbAdapter = new SQLiteDataAdapter(i_dbCommand);
+                DataTable i_dataTable = new DataTable();
+                i_dbAdapter.Fill(i_dataTable);
+                var Customer = new List<Customer>();
+                foreach (DataRow row in i_dataTable.Rows)
+                {
+                    var obj = new Customer()
+                    {
+                        customerName = Convert.ToString(row["customerName"]),
+                        customerAdress = Convert.ToString(row["customerAdrress"]),
+                        customerPIB = Convert.ToInt32(row["customerPIB"])
+                    };
+                    Customer.Add(obj);
+                    i_dbConnection.Close();
+                }
+                return Customer;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<string> getDbItem(string column, string table,string name)
+        {
+            try
+            {
+                SQLiteConnection i_dbConnection = new SQLiteConnection(@"Data Source = C:\Users\cenejac\Downloads\proba.db;");
+                SQLiteCommand i_dbCommand = new SQLiteCommand("SELECT " + column + "from " + table, i_dbConnection);
+                SQLiteDataAdapter i_dbAdapter = new SQLiteDataAdapter(i_dbCommand);
+                DataTable i_dataTable = new DataTable();
+                i_dbAdapter.Fill(i_dataTable);
+                List<string> itemsDb = new List<string>();
+                foreach (DataRow row in i_dataTable.Rows)
+                {
+                    itemsDb.Add(Convert.ToString(row[name]));
+                    i_dbConnection.Close();
+                }
+                /*   foreach(Proba i in Items)
+                   {
+                       i.LitemDescription = s;
+                   }*/
+
+                //   item.LitemDescription = s;
+                // item.itemId = s2;
+
+
+                return itemsDb;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<Item> getItem()
         {
             try
             {
@@ -41,9 +103,18 @@ namespace Gazdinstvo.MVVM.Model
                 DataTable i_dataTable = new DataTable();
                 i_dbAdapter.Fill(i_dataTable);
                 List<string> itemsDescription = new List<string>();
+                var item = new List<Item>();
                 foreach (DataRow row in i_dataTable.Rows)
                 {
-                    itemsDescription.Add(Convert.ToString(row["itemDescription"]));
+                    var obj = new Item()
+                    {
+
+                    LitemPrice = Convert.ToInt32(row["itemPrice"]),
+                    LitemDescription = Convert.ToString(row["itemDescription"])
+
+                };
+                    item.Add(obj);
+                  
                     i_dbConnection.Close();
                 }
                 /*   foreach(Proba i in Items)
@@ -55,7 +126,7 @@ namespace Gazdinstvo.MVVM.Model
                // item.itemId = s2;
                 
                 
-                return itemsDescription;
+                return item;
             }
             catch (Exception e)
             {
@@ -63,12 +134,12 @@ namespace Gazdinstvo.MVVM.Model
             }
         }
 
-        public List<Order> getItems()
+        public List<Order> getItems(int order)
         {
             try
             {
                 SQLiteConnection i_dbConnection = new SQLiteConnection(@"Data Source = C:\Users\cenejac\Downloads\proba.db;");
-                SQLiteCommand i_dbCommand = new SQLiteCommand("SELECT * FROM Orders JOIN Customer ON Orders.customerPIB = Customer.customerPIB JOIN Item ON Orders.itemDescription = Item.itemDescription WHERE orderNumber = 3", i_dbConnection);
+                SQLiteCommand i_dbCommand = new SQLiteCommand("SELECT * FROM Orders JOIN Customer ON Orders.customerPIB = Customer.customerPIB JOIN Item ON Orders.itemDescription = Item.itemDescription WHERE orderNumber =" + order, i_dbConnection);
                 SQLiteDataAdapter i_dbAdapter = new SQLiteDataAdapter(i_dbCommand);
                 DataTable i_dataTable = new DataTable();
                 i_dbAdapter.Fill(i_dataTable);
@@ -100,14 +171,14 @@ namespace Gazdinstvo.MVVM.Model
         {
             try
             {
-                const string query = "INSERT INTO Orders(orderId,itemDescription,itemQuantity,itemTotal,customerPIB,orderNumber) VALUES (@orderId,@itemDescription,@itemQuantity,@itemTotal,@customerPIB,@orderNumber);";
+                const string query = "INSERT INTO Orders(itemDescription,itemQuantity,itemTotal,customerPIB,orderNumber) VALUES (@itemDescription,@itemQuantity,@itemTotal,@customerPIB,@orderNumber);";
                 var args = new Dictionary<string, object>
-                {
-                    {"@orderId",626},
+                {                
                     {"@itemDescription",item.itemDescription},
-                    {"@itemQuantity",222},
-                    {"@itemTotal",50},
-                    {"@orderNumber",3},
+                    {"@itemQuantity",item.itemQuantity},
+                    {"@customerPIB",item.customerPIB},
+                    {"@itemTotal",item.itemTotal},
+                    {"@orderNumber",item.orderNumber},
                 };
                 return ExecuteWrite(query, args);
             }

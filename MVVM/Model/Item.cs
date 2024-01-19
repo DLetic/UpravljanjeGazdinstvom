@@ -8,7 +8,8 @@ namespace Gazdinstvo.MVVM.Model
 {
     public class Item
     {
-        public List<string> LitemDescription { get; set; }
+        public string LitemDescription { get; set; }
+        public int LitemPrice { get; set; }
     }
 }
 //Mora cela baza tipe item zbog upisvanja

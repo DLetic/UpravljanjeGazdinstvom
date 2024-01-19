@@ -23,6 +23,10 @@ namespace Gazdinstvo.MVVM.View
     public partial class NewInvoiceView : UserControl
     {
         DatabaseContext databaseContext = new DatabaseContext();
+        int last = 1;
+
+        Customer customer = new Customer();
+
         public NewInvoiceView()
         {
             InitializeComponent();
@@ -35,12 +39,13 @@ namespace Gazdinstvo.MVVM.View
           public List<Order> Item { get; set; }
           public List<Item> Proba { get; set; }
         }
-
+        List<ProbaClass> probaClasses = new List<ProbaClass>();
+        ProbaClass probaClass = new ProbaClass();
         public void GetCustomers()
         {
             List<ProbaClass> probaClasses = new List<ProbaClass>();
 
-
+            
 
 
 
@@ -64,26 +69,46 @@ namespace Gazdinstvo.MVVM.View
             List<string> s = new List<string>();
 
             List<Item> items = new List<Item>();
-           
 
-        
-            ProbaClass probaClass = new ProbaClass();
+            
 
-            probaClass.Item = databaseContext.getItems();
+            int orderNumber = 0;
+            var intList = databaseContext.getDbItem("*","orders","orderNumber").Select(s => Convert.ToInt32(s)).ToList();
+
+            if(intList == null)
+            {
+                intList.Add(last);
+            }else
+            {
+                last = intList.Max() + 1;
+            }
+
+            int PIB = 0;
+            
+
+            
+
+            //probaClass.Item = databaseContext.getItems();
             //probaClass.Proba = databaseContext.getIT();
 
-            tb.FilterMode = AutoCompleteFilterMode.ContainsOrdinal;
-            tb.ItemsSource = databaseContext.getIT();
+            tbProduct.FilterMode = AutoCompleteFilterMode.ContainsOrdinal;
+            tbProduct.ItemsSource = databaseContext.getDbItem("*","item","itemDescription");
             //GridProducts.DataContext = probaClass;
             //autopick.DataContext = databaseContext.getIT();
-            GridProducts.DataContext = databaseContext.getItems();
-          
-          /*  GridProducts.DataContext = new
-            {
-                Proba = databaseContext.getIT(),
-                Item = databaseContext.getItems(),
-            };
-          */
+            
+
+
+            //comboBox selector for customer
+
+            cmbCustomerSelector.ItemsSource = databaseContext.getCustomer();
+
+
+            /*  GridProducts.DataContext = new
+              {
+                  Proba = databaseContext.getIT(),
+                  Item = databaseContext.getItems(),
+              };
+            */
 
             /*   while (databaseContext.reader.Read())
                {
@@ -114,10 +139,21 @@ namespace Gazdinstvo.MVVM.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           Order item = new Order();
+            Order order = new Order();
+            Item item = new Item();
+            probaClass.Proba = databaseContext.getItem();
+            
             // item = (Order)ItemsDataGrid.SelectedItem;
-            item.itemDescription = tb.Text;
-            databaseContext.addItem(item);
+            order.orderNumber = last;
+            order.itemDescription = tbProduct.Text;
+            order.itemQuantity = Int32.Parse(tbQuantity.Text);
+            order.customerPIB = customer.customerPIB;
+            item = probaClass.Proba.Find(x => x.LitemDescription.Contains(order.itemDescription));
+            order.itemPrice = item.LitemPrice;
+            order.itemTotal = order.itemPrice * order.itemQuantity;
+
+            databaseContext.addItem(order);
+            GridProducts.DataContext = databaseContext.getItems(order.orderNumber);
         }
 
         private void ItemsDataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
@@ -130,18 +166,32 @@ namespace Gazdinstvo.MVVM.View
             proba.Add(p);
             proba.Add(p);
            // GridProducts.DataContext = proba;
-            ItemsDataGrid.ItemsSource = databaseContext.getItems();
+           // ItemsDataGrid.ItemsSource = databaseContext.getItems();
         }
 
-     /*   private void tb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Print(object sender, RoutedEventArgs e)
         {
-            
-            Order item = new Order();
-            item.itemQuantity = 1000;
-            item.itemPrice = 10;
-            item.itemDescription = "proba";
-         //   item.itemDescription = tb.Text;
-            databaseContext.addItem(item);
-        }*/
+
+        }
+
+        private void cmbCustomerSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+
+
+
+            customer = (Customer)cmbCustomerSelector.SelectedItem;
+        }
+
+        /*   private void tb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+           {
+
+               Order item = new Order();
+               item.itemQuantity = 1000;
+               item.itemPrice = 10;
+               item.itemDescription = "proba";
+            //   item.itemDescription = tb.Text;
+               databaseContext.addItem(item);
+           }*/
     }
 }
