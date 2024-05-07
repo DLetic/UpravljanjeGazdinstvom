@@ -3,10 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:Gazdinstvo.MVVM.ViewModel"
         xmlns:local="clr-namespace:Gazdinstvo"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Button Width="100" Click="Button_Click">Login</Button>
+        Title="MainWindow" Height="800" Width="450" WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None">
+
+
+    <Grid >
+        <materialDesign:Card Padding="32" Margin="16" Background="{DynamicResource MaterialDesignBackground}">
+            <materialDesign:DialogHost CloseOnClickAway="True" x:Name="DialogHost">
+                <StackPanel>
+                    <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0,20,20,0" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Height="25">
+                        <StackPanel Margin="16,10,0,6" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Text="Svetla tema"/>
+                            <ToggleButton Cursor="Hand" ToolTip="Svetla tema" Margin="12,5,8,0" x:Name="themeToggle" IsChecked="{Binding isLightTheme}" Click="themeToggle_Click"/>
+                            <Button ToolTip="Imate problem sa logovanjem" Margin="0,8,0,0" Content="Pomoć"/>
+                            <Button x:Name="Button_Close" ToolTip="Izadji iz aplikacije" Content="Izadji iz aplikacije" Click="Button_Close_Click"/>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                    <Image  Margin="0,60,0,5" Source="/Images/logo-no-background.png" Height="100"/>
+
+                    <TextBlock Margin="0,25,0,5" HorizontalAlignment="Center" FontSize="28" FontWeight="DemiBold" Text="Dobrodošli"/>
+                    <TextBlock FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center" Text="Ulogujte se"/>
+                    <TextBox Margin="0,50,0,0" x:Name="tbUserName" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite korisničko ime" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <PasswordBox Margin="0,20,0,0" x:Name="tbPassword" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite šifru" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{DynamicResource MaterialDesignOutlinedPasswordBox}"/>
+
+                    <Button Margin="0,20,0,0" x:Name="LoginButton" Style="{StaticResource Button}" Height="50" Width="300" Content="ULOGUJ SE" Click="Button_Click_Login"/>
+                    <Button Margin="0,20,0,0" x:Name="RegisterButton" Style="{StaticResource MaterialDesignFlatButton}" Foreground="#2A5C99"  Height="50" Width="300" FontSize="18" Content="Napravi Nalog" Click="Button_Click_Register"/>
+                </StackPanel>
+                
+                
+            </materialDesign:DialogHost>
+        </materialDesign:Card>
     </Grid>
 </Window>

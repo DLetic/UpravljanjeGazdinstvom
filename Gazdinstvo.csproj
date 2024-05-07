@@ -8,9 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Close Window.png" />
+    <None Remove="Images\CloseButton.ico" />
+    <None Remove="Images\logo-no-background.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\logo-no-background.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Close Window.png" />
+    <Resource Include="Images\CloseButton.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Caliburn.Micro.Core" Version="4.0.212" />
     <PackageReference Include="DotNetProjects.WpfToolkit.Input" Version="6.1.94" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.0" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.2.7" />
@@ -21,11 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="Fonts\" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Theme\Button.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Theme\TextBox.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

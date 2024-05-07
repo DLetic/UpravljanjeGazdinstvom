@@ -12,9 +12,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="Theme/MenuButton.xaml"/>
                 <ResourceDictionary Source="Theme/SubMenuButton.xaml"/>
                 <ResourceDictionary Source="Theme/TextBox.xaml"/>
+                <ResourceDictionary Source="Theme/Button.xaml"/>
+                <ResourceDictionary>
+                    <Style x:Key="styleless" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:SubMenuViewModel}">
@@ -26,8 +34,20 @@
             <DataTemplate DataType="{x:Type viewModel:UserControl1}">
                 <view:UserControl1/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AllInvoicesViewModel}">
+                <view:AllInvoices/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AddProductViewModel}">
+                <view:AddProduct/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:CustomersViewModel}">
+                <view:Customers/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:FinancesViewModel}">
+                <view:Finances/>
+            </DataTemplate>
 
-           
+
 
 
         </ResourceDictionary>

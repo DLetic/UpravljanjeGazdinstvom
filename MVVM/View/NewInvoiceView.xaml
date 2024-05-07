@@ -3,11 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-              xmlns:staticData="clr-namespace:Gazdinstvo.MVVM.Model" xmlns:controls="clr-namespace:System.Windows.Controls;assembly=DotNetProjects.Input.Toolkit"
+             xmlns:staticData="clr-namespace:Gazdinstvo.MVVM.Model" xmlns:controls="clr-namespace:System.Windows.Controls;assembly=DotNetProjects.Input.Toolkit" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              TextElement.FontWeight="Regular"
              TextElement.FontSize="5"
-            
              TextOptions.TextFormattingMode="Ideal" 
              TextOptions.TextRenderingMode="Auto"        
              Background="Transparent"
@@ -15,7 +14,7 @@
              d:DesignHeight="800" d:DesignWidth="1000">
 
     <Border CornerRadius="5" Background="#E9EAEB" >
-        <Grid Background="Transparent">
+        <Grid Background="Transparent" x:Name="NewInvoice" ContextMenuClosing="NewInvoice_ContextMenuClosing">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
@@ -38,8 +37,8 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50*"/>
                     <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="65"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -52,8 +51,7 @@
                 </Grid.RowDefinitions>
                 <!--SelectionChanged="tb_SelectionChanged"-->
 
-
-                <ComboBox x:Name="cmbCustomerSelector" Grid.ColumnSpan="4" Grid.RowSpan="2" Height="50" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="3" FontSize="20" ItemsSource="{Binding Customer}" SelectionChanged="cmbCustomerSelector_SelectionChanged">
+                <ComboBox x:Name="cmbCustomerSelector" Grid.ColumnSpan="4" Grid.RowSpan="2" Height="50" Background="Transparent" materialDesign:HintAssist.Hint=" Izaberite kupca" VerticalContentAlignment="Center" BorderBrush="#2A5C99" BorderThickness="2" FontSize="20" ItemsSource="{Binding Customer}" SelectionChanged="cmbCustomerSelector_SelectionChanged" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -64,17 +62,17 @@
                 </ComboBox>
 
 
-                <Button Grid.Row="3" Grid.Column="4" Click="Button_Click"  Grid.ColumnSpan="2"  Grid.RowSpan="2"  FontSize="15" HorizontalAlignment="Right" Height="40" Margin="0,0,0,10">Unesi</Button>
+                <Button Style="{StaticResource Button}" Grid.Row="3" Grid.Column="4" Click="Button_Click"  Grid.ColumnSpan="2"  Grid.RowSpan="2" Height="50" Margin="5,0,0,6">Unesi</Button>
 
                 <StackPanel Grid.Row="2" Grid.RowSpan="3" Background="Transparent" Grid.ColumnSpan="4" Margin="0,0,120,0" >
                     <Label FontSize="20" FontWeight="SemiBold">Proizvod</Label>
-                    <controls:AutoCompleteBox x:Name="tbProduct" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="3"   Height="50" FontSize="20">
+                    <controls:AutoCompleteBox x:Name="tbProduct" Background="Transparent"   BorderBrush="#2A5C99" BorderThickness="2"  materialDesign:HintAssist.Hint="Unesite proizvod"   Height="50" FontSize="20">
                     </controls:AutoCompleteBox>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="3" Grid.RowSpan="3" Margin="5,0,0,0">
 
                     <Label Grid.Column="3" FontSize="20" FontWeight="SemiBold">Količina</Label>
-                    <TextBox x:Name="tbQuantity"  MinWidth="50" Height="50" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="3" FontSize="20"  VerticalAlignment="Center"  TextAlignment="Center"/>
+                    <TextBox x:Name="tbQuantity"  MinWidth="50" Height="50" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="2" FontSize="20"  VerticalAlignment="Center" TextAlignment="Center"/>
                 </StackPanel>
                
 
@@ -85,8 +83,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="90"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Otpremnica broj:" FontWeight="SemiBold"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-                    <TextBlock x:Name="InvoiceNumber" Grid.Column="1" Text="0"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+                    <TextBlock Text="Otpremnica broj:" FontWeight="SemiBold"  Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
+                    <TextBlock x:Name="InvoiceNumber"  Grid.Column="1" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="3"  Margin="0,20,0,0" x:Name="CustomerData" HorizontalAlignment="Center" Grid.RowSpan="2" >
@@ -96,7 +94,7 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Grid.RowSpan="2" Click="Print">Završi</Button>
+                <Button Style="{StaticResource Button}" Grid.RowSpan="2" Click="Print">Završi</Button>
                 <Grid Grid.Row="3" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90"/>
@@ -121,7 +119,6 @@
                         <DataGridTextColumn Header="Količina" Binding="{Binding itemQuantity}"/>
                         <DataGridTextColumn Header="Cena" Binding="{Binding itemPrice}"/>
                         <DataGridTextColumn Header="Ukupno" Binding="{Binding itemTotal}"/>
-
                     </DataGrid.Columns>
 
                 </DataGrid>

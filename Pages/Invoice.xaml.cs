@@ -20,13 +20,13 @@ namespace Gazdinstvo.Pages
     /// </summary>
     public partial class Invoice : Page
     {
-  
 
         //  private MainWindow _mainWindow;
 
         public Invoice()
         {
             InitializeComponent();
+
        //     _mainWindow = mainWindow;
         }
 

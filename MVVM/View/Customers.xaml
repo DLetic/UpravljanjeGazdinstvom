@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="Gazdinstvo.MVVM.View.Customers"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gazdinstvo.MVVM.View"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#E9EAEB">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Poslovno ime" FontSize="20" FontWeight="SemiBold"/>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
+                <TextBox x:Name="CustomerName" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="3"   Height="50" FontSize="20"   />
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="Adresa sedišta" FontSize="20" FontWeight="SemiBold"/>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="4" Margin="5">
+                <TextBox x:Name="CustomerAdress" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="3"   Height="50" FontSize="20" VerticalAlignment="Top" />
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="2">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="PIB" FontSize="20" FontWeight="SemiBold"/>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="2" Margin="5">
+                <TextBox x:Name="CustomerPIB" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="3"   Height="50" FontSize="20" VerticalAlignment="Top" />
+            </Grid>
+
+            <Button Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Click="AddNewCustomer" Margin="5" >Sačuvaj</Button>
+            <Button Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5" Click="Button_Click_Update">Izmeni</Button>
+            <Button Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5" Click="Button_Click_Delete">Obriši</Button>
+        </Grid>
+
+
+        <DataGrid  x:Name="CustomersDataGrid" Grid.Row="1"  Grid.ColumnSpan="2" IsReadOnly="False" MouseRightButtonDown="CustomersDataGrid_MouseRightButtonDown" MouseDoubleClick="CustomersDataGrid_MouseDoubleClick"  Background="White"   ItemsSource="{Binding Customer}" AutoGenerateColumns="False">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="Poslovno ime" Width="250" Binding="{Binding customerName}"/>
+                <DataGridTextColumn Header="Adresa sedišta" Width="400" Binding="{Binding customerAdress}"/>
+                <DataGridTextColumn Header="Matični broj" Binding="{Binding customerPIB}"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+</UserControl>

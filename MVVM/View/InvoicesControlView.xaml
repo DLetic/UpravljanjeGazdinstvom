@@ -16,18 +16,20 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="5">
-            <RadioButton Content="Otpremnice"
+            <RadioButton Content="Nova Otpremnica"
                              Style="{StaticResource SubMenuButton}"
                              IsChecked="True" 
-                             Command="{Binding probaCommand}"/>
-            <RadioButton Content="Fakture"
+                             Command="{Binding NewInvoiceCommand}"/>
+            <RadioButton Content="Otpremnice"
                              Style="{StaticResource SubMenuButton}"
-                          Command="{Binding NewInvoiceCommand}"/>
+                             Command="{Binding allInvoicesCommand}"/>
             <RadioButton Content="Proizvodi"
-                             Style="{StaticResource SubMenuButton}"/>
-            <RadioButton Content="Fakture"
-
-                             Style="{StaticResource SubMenuButton}"/>
+                             Style="{StaticResource SubMenuButton}"
+                             Command="{Binding AddProductCommand}"/>
+            <RadioButton Content="Kupci"                            
+                             Style="{StaticResource SubMenuButton}" 
+                             Command="{Binding CustomerCommand}"/>
+            
         </StackPanel>
 
         

@@ -22,6 +22,11 @@ namespace Gazdinstvo
         public MenuWindow()
         {
             InitializeComponent();
+   
+        }
+        public string SendData()
+        {
+            return PGName.Text;
         }
 
         private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -61,5 +66,16 @@ namespace Gazdinstvo
                     }
             }
         }
+
+        private void Button_Click_Close(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+            //System.Windows.Forms.Application.ExitThread();
+            // System.Windows.Forms.Application.Exit();
+
+
+
+        }
+
     }
 }

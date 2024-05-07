@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Gazdinstvo.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Beige">
+    <Grid Background="Red">
             
     </Grid>
 </UserControl>

@@ -15,5 +15,7 @@ namespace Gazdinstvo.MVVM.Model
             public int itemPrice { get; set; }
             public int itemTotal { get; set; }
             public int customerPIB { get; set; }
+
+            public string date { get; set; }
     }
 }

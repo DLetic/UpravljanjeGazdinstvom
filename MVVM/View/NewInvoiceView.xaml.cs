@@ -22,28 +22,41 @@ namespace Gazdinstvo.MVVM.View
     /// </summary>
     public partial class NewInvoiceView : UserControl
     {
+        public static bool OrderNumberState = false; 
         DatabaseContext databaseContext = new DatabaseContext();
-        int last = 1;
+        ObservableCollection<Order> items = new ObservableCollection<Order>();
+        List<Farmer> farmer = new List<Farmer>();
+        int orderNum = 1;
+       
+        string dbName;
+        MenuWindow menu { get; set; }
+
+        Order order = new Order();
 
         Customer customer = new Customer();
+
+        int totalPrice = 0;
 
         public NewInvoiceView()
         {
             InitializeComponent();
             
             GetCustomers();
+            dbName = DatabaseContext.DB;
+            InvoiceDate.Text = DateTime.Now.ToString("dd.MM.yyyy");
         }
 
-        public class ProbaClass
+        public class OrderItem
         { 
-          public List<Order> Item { get; set; }
-          public List<Item> Proba { get; set; }
+          public List<Order> Order { get; set; }
+          public List<Item> Item { get; set; }
         }
-        List<ProbaClass> probaClasses = new List<ProbaClass>();
-        ProbaClass probaClass = new ProbaClass();
+        List<OrderItem> OrderItemes = new List<OrderItem>();
+        OrderItem orderItem = new OrderItem();
         public void GetCustomers()
         {
-            List<ProbaClass> probaClasses = new List<ProbaClass>();
+            
+            List<OrderItem> OrderItemes = new List<OrderItem>();
 
             
 
@@ -51,49 +64,57 @@ namespace Gazdinstvo.MVVM.View
 
             List<Order> i = new List<Order>();
             Order item = new Order();
-           
 
-            
-            
-     
 
+
+      
 
 
 
 
            
+
+
 
             item.itemDescription = "PROBA";
             i.Add(item);
 
             List<string> s = new List<string>();
 
-            List<Item> items = new List<Item>();
-
+          
+            ItemsDataGrid.DataContext = items;
             
 
-            int orderNumber = 0;
+            int orderNumber = 1;
             var intList = databaseContext.getDbItem("*","orders","orderNumber").Select(s => Convert.ToInt32(s)).ToList();
 
-            if(intList == null)
+            if(!intList.Any())
             {
-                intList.Add(last);
+                intList.Add(orderNum);
             }else
             {
-                last = intList.Max() + 1;
+                orderNum = intList.Max() + 1;
+            }
+
+
+            if (OrderNumberState)
+            {
+                orderNum = intList.Max();
+                ItemsDataGrid.DataContext = databaseContext.getItems(orderNum);
             }
 
             int PIB = 0;
-            
 
-            
+            InvoiceNumber.Text = Convert.ToString(orderNum);
 
-            //probaClass.Item = databaseContext.getItems();
-            //probaClass.Proba = databaseContext.getIT();
+
+            //OrderItem.Item = databaseContext.getItems();
+            //OrderItem.Proba = databaseContext.getIT();
+            
 
             tbProduct.FilterMode = AutoCompleteFilterMode.ContainsOrdinal;
             tbProduct.ItemsSource = databaseContext.getDbItem("*","item","itemDescription");
-            //GridProducts.DataContext = probaClass;
+            //GridProducts.DataContext = OrderItem;
             //autopick.DataContext = databaseContext.getIT();
             
 
@@ -139,21 +160,27 @@ namespace Gazdinstvo.MVVM.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Order order = new Order();
-            Item item = new Item();
-            probaClass.Proba = databaseContext.getItem();
-            
-            // item = (Order)ItemsDataGrid.SelectedItem;
-            order.orderNumber = last;
-            order.itemDescription = tbProduct.Text;
-            order.itemQuantity = Int32.Parse(tbQuantity.Text);
-            order.customerPIB = customer.customerPIB;
-            item = probaClass.Proba.Find(x => x.LitemDescription.Contains(order.itemDescription));
-            order.itemPrice = item.LitemPrice;
-            order.itemTotal = order.itemPrice * order.itemQuantity;
+            //ODRADI DA KAD SE PROMENI PROZOR PITA TE DAL DA SACUVAMO OTPREMICU
+             Item item = new Item();
+             orderItem.Item = databaseContext.getItem();
 
-            databaseContext.addItem(order);
-            GridProducts.DataContext = databaseContext.getItems(order.orderNumber);
+             //item = (Order)ItemsDataGrid.SelectedItem;
+             order.orderNumber = orderNum;
+             order.itemDescription = tbProduct.Text;
+             order.itemQuantity = Int32.Parse(tbQuantity.Text);
+             order.customerPIB = customer.customerPIB;
+             item = orderItem.Item.Find(x => x.LitemDescription.Contains(order.itemDescription));
+             order.itemPrice = item.LitemPrice;
+             order.itemTotal = order.itemPrice * order.itemQuantity;
+             totalPrice += order.itemTotal;
+             order.date = DateTime.Now.ToString("dd.MM.yyyy");
+             databaseContext.addItem(order);
+             
+             ItemsDataGrid.DataContext = databaseContext.getItems(order.orderNumber);
+             items.Add(order);
+             
+             tbProduct.Text = null;
+             OrderNumberState = true;
         }
 
         private void ItemsDataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
@@ -171,17 +198,59 @@ namespace Gazdinstvo.MVVM.View
 
         private void Print(object sender, RoutedEventArgs e)
         {
+           try
+           {
 
+                items.Clear();
+             //  this.IsEnabled = false;
+               PrintDialog printDialog = new PrintDialog();
+               Pages.Invoice invoice = new Pages.Invoice();
+
+
+             //   Items item = new Items(); Popraviti print zeza
+
+
+                DatabaseContext databaseContext = new DatabaseContext();
+
+                farmer = databaseContext.getFarmer(dbName);
+                invoice.FarmerData.DataContext = farmer;
+                invoice.CustomerData.DataContext = customer;
+                invoice.ItemsDataGrid.DataContext = databaseContext.getItems(order.orderNumber);
+                invoice.InvoiceDate.Text = DateTime.Now.ToString("dd.MM.yyyy");
+                invoice.TotalPrice.Text = totalPrice.ToString();
+                invoice.InvoiceNumber.Text = InvoiceNumber.Text.ToString();
+
+                if (printDialog.ShowDialog() == true)
+               {
+                   printDialog.PrintVisual(invoice.PrintPage, "Invoice");
+               }
+                GridProducts.DataContext = null;
+                tbProduct.Text = null;
+                tbQuantity.Text = null;
+                GetCustomers();
+                OrderNumberState = false;
+            }
+           catch
+           {
+            //   this.IsEnabled = true;
+           }
         }
 
         private void cmbCustomerSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-
+            //Ovde treba napraviti da se sacuva ako se promeni na drugog kupca
 
 
             customer = (Customer)cmbCustomerSelector.SelectedItem;
         }
+
+        private void NewInvoice_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            
+        }
+
+
 
         /*   private void tb_SelectionChanged(object sender, SelectionChangedEventArgs e)
            {
