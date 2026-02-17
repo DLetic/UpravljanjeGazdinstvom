@@ -17,7 +17,7 @@
       Title="Invoice">
 
     <Grid x:Name="LayoutTemplate" Background="White">
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
@@ -26,6 +26,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -34,52 +35,65 @@
 
         <Grid Grid.Row="1" Grid.Column="1" Margin="0,20,0,0" x:Name="SellerData" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Poljoprivredno gazdinstvo"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock x:Name="PGName" Grid.Row="1" Text="Dejan Letić" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock x:Name="PGAdress" Grid.Row="2" Text="Ratarska 13, Čenej" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock x:Name="PGUid" Grid.Row="3" Text="BPG: 802891001381" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock Grid.Row="4" Text="Tekući račun:" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock x:Name="PGCheckingAccountNumber" Grid.Row="5" Text="310-0400500314166-56" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock Grid.Row="6" Text="RS-ORG-01" FontWeight="ExtraBold" Margin="0,30,0,10"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <Grid Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <StackPanel Name="FarmerData" >
+                <TextBlock Text="Poljoprivredno gazdinstvo" HorizontalAlignment="Center"  Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock x:Name="FarmerName"  HorizontalAlignment="Center" Text="{Binding farmerName}"  Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock x:Name="PGAdress" Text="{Binding farmerAdress}" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock Text="BPG" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock x:Name="PGUid" Text="{Binding farmerBPG}" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock Text="Tekući račun:" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock x:Name="PGCheckingAccountNumber" Text="{Binding accountNumber}" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="1" Text="RS-ORG-01" FontWeight="ExtraBold"   Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
-                    <TextBlock Text="Otpremnica broj:" FontWeight="SemiBold"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-                    <TextBlock x:Name="InvoiceNumber" Grid.Column="1" Text="0"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+                <TextBlock Text="Otpremnica broj:" FontWeight="SemiBold"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+                <TextBlock x:Name="InvoiceNumber"  Grid.Column="1"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="2"  Margin="0,20,0,0" x:Name="CustomerData" HorizontalAlignment="Center" >
+        <Grid Grid.Row="1" Grid.Column="2"  Margin="0,20,0,0" x:Name="CustomerData" HorizontalAlignment="Stretch" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="CustomerName" Text="Lanzaro 2000 d.o.o." HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock x:Name="CustomerAdress" Grid.Row="1" Text="Vojvode Stepe 6-8 Inđija" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <TextBlock x:Name="CustomerUid" Grid.Row="2" Text="PIB: 108661095" HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-            <Grid Grid.Row="3" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <TextBlock HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignBody1TextBlock}">Poslovno ime:</TextBlock>
+                <TextBlock HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignBody1TextBlock}">Adresa firme:</TextBlock>
+                <TextBlock HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignBody1TextBlock}">PIB:</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                <TextBlock x:Name="CustomerName" Text="{Binding customerName}" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock x:Name="CustomerAdress" Text="{Binding customerAdress}" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                <TextBlock x:Name="CustomerPIB" Text="{Binding customerPIB}" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="3" VerticalAlignment="Bottom" Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Datum:" FontWeight="SemiBold" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
-                <TextBlock x:Name="InvoiceDate" Grid.Column="1" Text="1.1.2023"  Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+                <TextBlock x:Name="InvoiceDate" Grid.Column="1" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
             </Grid>
-        </Grid> 
-        <Grid x:Name="GridProducts" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="20">
-            <DataGrid  Grid.Column="1" Grid.Row="3" Background="White"  x:Name="ItemsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        </Grid>
+        <Grid x:Name="GridProducts" Grid.Row="2" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="20">
+            <DataGrid  Grid.Column="1" Grid.Row="3" Background="White"  x:Name="ItemsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Style="{DynamicResource MaterialDesignDataGrid}">
                 <DataGrid.Columns >
                     <DataGridTextColumn Header="Redni broj" Binding="{Binding itemNumber}"/>
                     <DataGridTextColumn Width="300" Header="Naziv proizvoda" Binding="{Binding itemDescription}"/>
@@ -92,7 +106,24 @@
 
 
         </Grid>
-      
+        <Grid Grid.Row="4" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,180,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock FontSize="20">Ukupno:</TextBlock>
+            <TextBlock  x:Name="TotalPrice" Grid.Column="1" FontSize="20"></TextBlock>
+        </Grid>
+
+
+
+        <Label Grid.Row="4" Grid.Column="1" Margin="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200">
+            <TextBlock TextDecorations="None">Izdao:_______________________</TextBlock>
+        </Label>
+
+        <Label Grid.Row="4" Grid.Column="1" Margin="50,0,0,20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200">
+            <TextBlock TextDecorations="None">Primio:______________________</TextBlock>
+        </Label>
 
     </Grid>
 </Page>

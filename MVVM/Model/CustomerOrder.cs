@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Gazdinstvo.MVVM.Model
 {
-    public class Item
+    public class CustomerOrder
     {
-        public string LitemDescription { get; set; }
-        public int LitemPrice { get; set; }
+            public Order O { get; set; }
+            public Customer C { get; set; }
     }
 }
-//Mora cela baza tipe item zbog upisvanja

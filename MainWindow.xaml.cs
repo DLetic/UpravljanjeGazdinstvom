@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Data;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using Gazdinstvo.MVVM.Model;
+using Gazdinstvo.MVVM.View;
 namespace Gazdinstvo
 {
     /// <summary>
@@ -23,6 +25,11 @@ namespace Gazdinstvo
     public partial class MainWindow : Window
     {
         public SQLiteDataReader reader;
+        DatabaseContext databaseContext = new DatabaseContext();
+        List<Farmer> farmers = new List<Farmer>();
+       
+        Register register = new Register();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -30,14 +37,29 @@ namespace Gazdinstvo
 
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
-            MenuWindow menuWindow = new MenuWindow();
+
+            farmers = databaseContext.getFarmer(tbUserName.Text);
+            int checkUser,checkPass = 1;
+            checkUser = farmers.FindIndex(s => s.farmerName == tbUserName.Text);
+            checkPass = farmers.FindIndex(s => s.farmerPassword == tbPassword.Password);
             
-            menuWindow.Show();
-            this.Close();
-            /*
-            try
+            if (checkUser == 0 && checkPass == 0)
+            {
+                MenuWindow menuWindow = new MenuWindow();
+                menuWindow.PGName.Text = tbUserName.Text;
+                menuWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Pogrešno korisničko ime ili šifra");
+            }
+            
+           
+            
+           /* try
             {
                 
                 
@@ -55,10 +77,12 @@ namespace Gazdinstvo
                 item.itemTotal = item.itemQuantity * item.itemPrice;
                
                 items.Add(item);
-               
+
+                DatabaseContext databaseContext = new DatabaseContext();
+
                 
 
-                invoice.ItemsDataGrid.DataContext = reader;
+                invoice.ItemsDataGrid.DataContext = databaseContext.getItems();
               
 
 
@@ -79,19 +103,31 @@ namespace Gazdinstvo
             catch
             {
                 this.IsEnabled = true;
-            }
-        }*/
-    }
+            }*/
+        }
 
-        public class Items
+        private void Button_Click_Register(object sender, RoutedEventArgs e)
         {
-            public int itemNumber { get; set; }
-            public string itemDescription { get; set; }
-            public int itemQuantity { get; set; }
 
-            public int itemPrice { get; set; }
+            //    DatabaseContext database = new DatabaseContext();
+            // database.CreateDatabase();
+            register.Show();
+            this.Close();
+            
+        }
 
-            public int itemTotal { get; set; }
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+
+        }
+
+        private void themeToggle_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
+
+
+    
 }

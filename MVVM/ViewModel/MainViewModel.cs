@@ -11,9 +11,12 @@ namespace Gazdinstvo.MVVM.ViewModel
     {
         public RelayCommand SubMenuCommand { get; set; }
         public RelayCommand NewInvoiceCommand { get; set; }
+        public RelayCommand CustomersCommand { get; set; }
+        public RelayCommand FinancesCommand { get; set; }
         public SubMenuViewModel SubMenuVM { get; set; }
         public NewInvoiceViewModel NewInvoiceVM { get; set; }
-
+        public CustomersViewModel CustomersVM { get; set; }
+        public FinancesViewModel financesVM { get; set; }
         private object _currentView;
     
 
@@ -28,7 +31,9 @@ namespace Gazdinstvo.MVVM.ViewModel
         {
             SubMenuVM = new SubMenuViewModel();
             NewInvoiceVM = new NewInvoiceViewModel();
-          CurrentView = SubMenuVM;
+            CustomersVM = new CustomersViewModel();
+            financesVM = new FinancesViewModel();
+            CurrentView = SubMenuVM;
 
             SubMenuCommand = new RelayCommand(o =>
             {
@@ -39,6 +44,17 @@ namespace Gazdinstvo.MVVM.ViewModel
             {
                 CurrentView = NewInvoiceVM;
             });
+
+            CustomersCommand = new RelayCommand(o =>
+            {
+                CurrentView = CustomersVM;
+            });
+
+            FinancesCommand = new RelayCommand(o =>
+            {
+                CurrentView = financesVM;
+            });
+
 
         }
     }

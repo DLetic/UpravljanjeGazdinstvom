@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Gazdinstvo.MVVM.View.AllInvoices"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=DotNetProjects.Input.Toolkit"
+             xmlns:local="clr-namespace:Gazdinstvo.MVVM.View"
+             mc:Ignorable="d" Background="Wheat"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#E9EAEB" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <StackPanel Grid.Row="2" Grid.RowSpan="3"  Grid.ColumnSpan="4" Margin="0,0,120,0" >
+                <Label FontSize="20" FontWeight="SemiBold">Traži proizvod</Label>
+                <controls:AutoCompleteBox x:Name="tbProductSearch" MouseDoubleClick="tbProductSearch_LostFocus" Background="Transparent" BorderBrush="#2A5C99" BorderThickness="2"   Height="50" FontSize="20" >
+                </controls:AutoCompleteBox>
+            </StackPanel>
+        </Grid>
+
+        <DataGrid Grid.Row="1" x:Name="OrdersDataGrid" Grid.ColumnSpan="2" Grid.RowSpan="2"  IsReadOnly="True" CanUserAddRows="False"   MouseDoubleClick="OrdersDataGrid_MouseDoubleClick"   ItemsSource="{Binding CustomerOrder}" AutoGenerateColumns="False">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header="Redni broj porudzbine" Binding="{Binding O.orderNumber}"/>
+                <DataGridTextColumn Width="300" Header="Kupac" Binding="{Binding C.customerName}"/>
+                <DataGridTextColumn Header="Datum" Binding="{Binding O.date}"/>
+                <DataGridTemplateColumn Header="" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="PrintInvoice" Click="PrintInvoice_Click">
+                                ŠTAMPAJ
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="ViewInvoice" Click="ViewInvoice_Click">
+                                PREGLED
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+</UserControl>

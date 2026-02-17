@@ -1,0 +1,45 @@
+﻿<Window x:Class="Gazdinstvo.MVVM.View.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gazdinstvo.MVVM.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Register" Height="800" Width="450" WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None">
+
+    <Grid>
+        <materialDesign:Card Padding="32" Margin="16" Background="{DynamicResource MaterialDesignBackground}">
+            <materialDesign:DialogHost CloseOnClickAway="True" x:Name="DialogHost">
+                <StackPanel>
+                  
+                    <Image  Margin="0,0,0,5" Source="/Images/logo-no-background.png" Height="100"/>
+
+                    <TextBlock Margin="0,8,0,5" HorizontalAlignment="Center" FontSize="26" FontWeight="DemiBold" Text="Kreiranje novog korisnika"/>
+                    <TextBox Margin="0,20,0,0" x:Name="tbUserName" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite korisničko ime" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <PasswordBox Margin="0,20,0,0" x:Name="tbPassword" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite šifru" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{DynamicResource MaterialDesignOutlinedPasswordBox}"/>
+                    <PasswordBox Margin="0,20,0,0" x:Name="tbPasswordRepeat" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Ponovite šifru" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{DynamicResource MaterialDesignOutlinedPasswordBox}"/>
+                    <TextBox Margin="0,20,0,0" x:Name="tbAdress" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite adresu" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox Margin="0,20,0,0" x:Name="tbBPG" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite BPG" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox Margin="0,20,0,0" x:Name="tbAccount" Width="300" FontSize="18" materialDesign:HintAssist.Hint="Unesite broj računa" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+
+
+                    <Button Margin="0,20,0,0" x:Name="RegisterButton" Style="{StaticResource Button}" Height="50" Width="300" Content="KREIRAJ" Click="RegisterButton_Click"/>
+                    
+                </StackPanel>
+
+
+            </materialDesign:DialogHost>
+        </materialDesign:Card>
+    </Grid>
+</Window>
